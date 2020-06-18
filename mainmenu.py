@@ -1,58 +1,61 @@
-from tkinter import *
-from PIL import Image, ImageTk
+class project_Menu:
 
-root = Tk()
-root.attributes("-fullscreen", True)
+    def __init__(self,master =None,notebook =None):
+        self.root = master
+        self.note = notebook
 
-# butt_holder = LabelFrame(root, borderwidth = 0, highlightthickness = 0)
+    def draw(self):
+        from tkinter import Canvas,Button
+        from PIL import ImageTk,Image
 
+        w,h = self.root.winfo_screenwidth(),self.root.winfo_screenheight()
 
-background_img = ImageTk.PhotoImage(Image.open("back.png"))
-background_canv = Canvas(root, width = 1366, height = 768)
+        op_menu = "source\\back.png"
+        self.can = Canvas(self.note,border=0,highlightthickness=0)
+        self.can.pack(fill="both",expand=1)
 
-background_canv.create_image(0, 0, anchor = NW, image = background_img)
-background_canv.pack()
+        self.x = ImageTk.PhotoImage(Image.open(op_menu).resize((w,h)))
+        self.can.create_image(0,0,anchor="nw",image=self.x)
+        
+        siz_210 = round(w//6.504)
+        self.cust_img = ImageTk.PhotoImage(Image.open("Buttons\cust420x210.png").resize((siz_210,siz_210)))
+        
+        self.emp_img = ImageTk.PhotoImage(Image.open("Buttons\emp210x210.png").resize((siz_210,round(h//3.764))))
+        
+        self.bill_img = ImageTk.PhotoImage(Image.open("Buttons/bill420x210.png").resize((round(w//3.176),siz_210)))
+        
+        self.log_img = ImageTk.PhotoImage(Image.open("Buttons\log210x210.png").resize((round(w//6.383),round(h//3.764))))
+        
+        self.stock_img = ImageTk.PhotoImage(Image.open("Buttons\stock210x420.png").resize((siz_210,round(h//1.828))))
+        
+        self.quit_img = ImageTk.PhotoImage(Image.open("Buttons\quit420x210.png").resize((round(w//3.176),siz_210)))
+        
 
-
-
-
-# button images
-cust_img = ImageTk.PhotoImage(Image.open("Buttons\cust420x210.png"))
-emp_img = ImageTk.PhotoImage(Image.open("Buttons\emp210x210.png"))
-bill_img = ImageTk.PhotoImage(Image.open("Buttons/bill420x210.png"))
-stock_img = ImageTk.PhotoImage(Image.open("Buttons\stock210x420.png"))
-quit_img = ImageTk.PhotoImage(Image.open("Buttons\quit420x210.png"))
-log_img = ImageTk.PhotoImage(Image.open("Buttons\log210x210.png"))
-
-butt_bill = Button(background_canv, image = bill_img, highlight = None, relief = FLAT, height = 204, width = 424)
-butt_cust = Button(background_canv, image = cust_img, highlight = None, relief = FLAT, height = 204, width = 204, highlightthickness = 0)
-butt_log = Button(background_canv, image = log_img, highlight = None, relief = FLAT, height = 204, width = 208, highlightthickness = 0)
-butt_emp = Button(background_canv, image = emp_img, highlight = None, relief = FLAT, height = 204, width = 204, highlightthickness = 0)
-butt_quit = Button(background_canv, image = quit_img, highlight = None, relief = FLAT, height = 204, width = 424, command = root.destroy, highlightthickness = 0)
-butt_stock = Button(background_canv, image = stock_img, highlight = None, relief = FLAT, width = 204, height = 419, highlightthickness = 0)
-
-
-# butt_cust.grid(column = 0,row = 0, padx = 1, pady = 1)
-# butt_bill.grid(column = 1,row = 0, columnspan = 2 , padx = 1, pady = 1)
-# butt_emp.grid(column = 0, row = 1, pady = 1)
-# butt_log.grid(column = 1,row = 1, padx = 1, pady = 1)
-# butt_stock.grid(column = 2, row  = 1, rowspan = 2, padx = 1, pady = 1)
-# butt_quit.grid(column = 0,row = 2, columnspan = 2, padx = 1, pady = 1)
-
-# butt_holder.place(x = 650, y = 60)
-# background_label.place(x=0, y=0)
-# butt_holder.lift()
-butt_cust.place(x = 670, y = 60)
-butt_bill.place(x = 885, y = 60)
-butt_emp.place(x = 670 , y = 275)
-butt_log.place(x = 885, y = 275)
-butt_stock.place(x =1105 , y = 275)
-butt_quit.place(x = 670, y = 490)
+        self.butt_cust = Button(self.can,border=0,highlightthickness=0, image = self.cust_img)
+        self.butt_cust.place(relx=0.49 , rely= 0.078)
+        
+        self.butt_emp = Button(self.can,border=0,highlightthickness=0, image = self.emp_img)
+        
+        self.butt_bill = Button(self.can,border=0,highlightthickness=0, image = self.bill_img)
+        
+        self.butt_log = Button(self.can,border=0,highlightthickness=0, image = self.log_img)
+        
+        self.butt_stock = Button(self.can,border=0,highlightthickness=0, image = self.stock_img)
+        
+        self.butt_quit = Button(self.can,border=0,highlightthickness=0, image = self.quit_img,command=self.root.destroy)        
 
 
+        self.butt_bill.place(relx=0.647,rely=0.078)
+        self.butt_emp.place(relx=0.49,rely=0.36)
+        self.butt_log.place(relx=0.647,rely=0.36)
+        self.butt_stock.place(relx=0.808,rely=0.36)
+        self.butt_quit.place(relx=0.49,rely=0.632)
 
-butt_bill.focus_set()
 
-
-
-root.mainloop()
+if __name__ =="__main__":
+  from tkinter import Tk
+  root = Tk()
+  root.attributes("-fullscreen",True)
+  a = project_Menu(root,root)
+  a.draw()
+  root.mainloop()

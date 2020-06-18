@@ -7,11 +7,13 @@ root.attributes("-fullscreen", True)
 # butt_holder = LabelFrame(root, borderwidth = 0, highlightthickness = 0)
 
 
-background_img = ImageTk.PhotoImage(Image.open("back.png"))
-background_canv = Canvas(root, width = 1366, height = 768)
+#background_img = ImageTk.PhotoImage(Image.open("back.png"))
+background_img = ImageTk.PhotoImage(Image.open("back.png").resize((root.winfo_screenwidth(),root.winfo_screenheight())))
+    # Don't use this changed code. It ruins your design on 1920x1080p, However should be perfect on 1366x768
+background_canv = Canvas(root,highlightthickness = 0,border=0)
 
 background_canv.create_image(0, 0, anchor = NW, image = background_img)
-background_canv.pack()
+background_canv.pack(expand=1,fill="both")
 
 
 

@@ -1,77 +1,73 @@
-#from tkinter.ttk import Notebook,Style
-
-
 class project_Menu:
 
-    def __init__(self,master = None,notebook = None):
+    def __init__(self,master =None,notebook =None):
         self.root = master
         self.note = notebook
 
     def draw(self):
-        from tkinter import Canvas,Button,Label
+        from tkinter import Canvas,Button
         from PIL import ImageTk,Image
+
         w,h = self.root.winfo_screenwidth(),self.root.winfo_screenheight()
-#        if w == 1536 and h == 864:
-#            self.op_menu = "source\\land15.jpg"
-#        elif w == 1366 and h == 768:
-#            self.op_menu = "source\\land13.jpg"
-#        elif w>1920 and h>1080:
-#            self.op_menu = "source\\land19.jpg"
-#        else:
-#            self.op_menu = "source\\land13.jpg"
-        self.op_menu = "source\\land19.jpg"
-        self.can = Canvas(self.note,border=0,highlightthickness=0)#,width=1000,height=1000)
+
+        op_menu = "source\\back.png"
+        self.can = Canvas(self.note,border=0,highlightthickness=0)
         self.can.pack(fill="both",expand=1)
 
-        self.x = ImageTk.PhotoImage(Image.open(self.op_menu).resize((w,h)))
+        self.x = ImageTk.PhotoImage(Image.open(op_menu).resize((w,h)))
         self.can.create_image(0,0,anchor="nw",image=self.x)
-        self.label = Label(self.can,text="Welcome!",bg="#333",fg="white",font=(None,32))
-        self.label.pack(fill="x")
+        
+        siz_210 = round(w//6.504)
+#        global cust_img,emp_img,bill_img,log_img,stock_img,quit_img
+        self.cust_img = ImageTk.PhotoImage(Image.open("source\\cust420x210.png").resize((siz_210,siz_210)))
+        
+        self.emp_img = ImageTk.PhotoImage(Image.open("source\\emp210x210.png").resize((siz_210,round(h//3.764))))
+        
+        self.bill_img = ImageTk.PhotoImage(Image.open("source\\bill420x210.png").resize((round(w//3.176),siz_210)))
+        
+        self.log_img = ImageTk.PhotoImage(Image.open("source\\log210x210.png").resize((round(w//6.383),round(h//3.764))))
+        
+        self.stock_img = ImageTk.PhotoImage(Image.open("source\\stock210x420.png").resize((siz_210,round(h//1.828))))
+        
+        self.quit_img = ImageTk.PhotoImage(Image.open("source\\quit420x210.png").resize((round(w//3.176),siz_210)))
+        
 
-        #ex = Button(can,width=0,text='EXIT',bg="#333",font="None ",command=root.destroy)
-        #ex.place(x=root.winfo_screenwidth()-ex.winfo_reqwidth(),y=0)#.pack(anchor=NE)
+        self.butt_cust = Button(self.can,border=0,highlightthickness=0, image = self.cust_img)
+        
+        self.butt_emp = Button(self.can,border=0,highlightthickness=0, image = self.emp_img)
+        
+        self.butt_bill = Button(self.can,border=0,highlightthickness=0, image = self.bill_img)
+        
+        self.butt_log = Button(self.can,border=0,highlightthickness=0, image = self.log_img)
+        
+        self.butt_stock = Button(self.can,border=0,highlightthickness=0, image = self.stock_img)
+        
+        self.butt_quit = Button(self.can,border=0,highlightthickness=0, image = self.quit_img,command=self.root.destroy)        
 
+        self.butt_cust.place(relx=0.49 , rely= 0.078)
+        self.butt_emp.place(relx=0.49,rely=0.36)
+        self.butt_bill.place(relx=0.647,rely=0.078)
+        self.butt_log.place(relx=0.647,rely=0.36)
+        self.butt_stock.place(relx=0.808,rely=0.36)
+        self.butt_quit.place(relx=0.49,rely=0.632)
+        
+        button_list = [self.butt_cust,self.butt_emp,self.butt_bill,self.butt_log,self.butt_stock,self.butt_quit]
+        for i in button_list:
+          def enter(e,i=i):
+            i.config(border=1,relief="solid")  # BORDER =1 or =2 ???
+            i.focus_set()                      # which would be better?
+          def leave(e,i=i):
+            i.config(border=0,relief="flat")
+          i.bind("<Enter>",enter)
+          i.bind("<Leave>",leave)
+          i.bind("<FocusIn>",enter)
+          i.bind("<FocusOut>",leave)
 
-        # ______________________ BASIC ____________________________
-        # canvas at-->> can, Tk() at -->> root
-        self.xby4 = round(self.root.winfo_reqwidth()//0.8)#260
-        self.yby4 = round(self.root.winfo_reqheight()//1.7)#120
-
-        self.bil = ImageTk.PhotoImage(Image.open("source\\BillingRect.png").resize((self.xby4,self.yby4)))
-        self.cus = ImageTk.PhotoImage(Image.open("source\\CustomerRect.png").resize((self.xby4,self.yby4)))
-        self.emp = ImageTk.PhotoImage(Image.open("source\\EmpRect.png").resize((self.xby4,self.yby4)))
-        self.sto = ImageTk.PhotoImage(Image.open("source\\StocksRect.png").resize((self.xby4,self.yby4)))
-        self.log = ImageTk.PhotoImage(Image.open("source\\LogoutRect.png").resize((self.xby4,self.yby4)))
-        self.qui = ImageTk.PhotoImage(Image.open("source\\QuitRect.png").resize((self.xby4,self.yby4)))
-#        self.men = ImageTk.PhotoImage(Image.open("source\\MenuRect.png").resize((self.xby4,self.yby4)))
-
-        #fr = LabelFrame(can,border=0,highlightthickness=0,bg="orange",padx=20,pady=20)
-        #fr.pack(expand=1)
-        #re = 1E gr = 3D bl = 7E
-
-        self.customer = Button(self.can,image=self.cus,border=0,highlightthickness=0,relief="flat")
-        self.customer.place(relx=0.25,rely=0.25)
-
-        self.bill = Button(self.can,image=self.bil ,border=0,highlightthickness=0,relief="flat")
-        self.bill.place(relx=0.55,rely=0.25)
-
-        self.employee = Button(self.can,image=self.emp ,border=0,highlightthickness=0,relief="flat")
-        self.employee.place(relx=0.25,rely=0.45)
-
-        self.logout = Button(self.can,image=self.log ,border=0,highlightthickness=0,relief="flat")
-        self.logout.place(relx=0.25,rely=0.65)
-
-        self.stock = Button(self.can,image=self.sto ,border=0,highlightthickness=0,relief="flat")
-        self.stock.place(relx=0.55,rely=0.45)
-
-        self.quit = Button(self.can,image=self.qui ,border=0,highlightthickness=0,relief="flat",
-		command=self.root.destroy)
-        self.quit.place(relx=0.55,rely=0.65)
-
-if __name__ == '__main__':
-    from tkinter import Tk
-    root = Tk()
-    root.attributes("-fullscreen",True)
-    a = project_Menu(master=root)
-    a.draw()
-    root.mainloop()
+#relif = flat, groove, raised, ridge, solid, or sunken
+if __name__ =="__main__":
+  from tkinter import Tk
+  root = Tk()
+  root.attributes("-fullscreen",True)
+  a = project_Menu(root,root)
+  a.draw()
+  root.mainloop()
